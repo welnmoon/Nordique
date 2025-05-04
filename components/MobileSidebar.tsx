@@ -18,9 +18,11 @@ interface Props {
 
 const MobileDrawer = ({ open, onClose }: Props) => {
   const pathname = usePathname();
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     onClose();
-  }, [pathname, onClose]);
+  }, [pathname]);
 
   const [childrenDrawer, setChildrenDrawer] = useState(false);
   const removeItem = useCartStore((state) => state.removeItem);

@@ -15,9 +15,10 @@ const MySidebar = () => {
   const removeItem = useCartStore((state) => state.removeItem);
   const pathname = usePathname();
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => {
     setOpen(false);
-  }, [pathname, setOpen]);
+  }, [pathname]);
 
   const itemsPrice = formatPrice(
     items.reduce((sum, i) => sum + i.price * i.quantity, 0)
