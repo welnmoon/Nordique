@@ -16,9 +16,9 @@ const MySidebar = () => {
   const pathname = usePathname();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  // useEffect(() => {
+  //   setOpen(false);
+  // }, [pathname]);
 
   const itemsPrice = formatPrice(
     items.reduce((sum, i) => sum + i.price * i.quantity, 0)
