@@ -5,12 +5,6 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect } from "react";
 
-// Props: {
-//   searchParams,
-// }: {
-//   searchParams: { session_id?: string };
-// }
-
 const SuccessPage = () => {
   const { data: session } = useSession();
   const items = useCartStore((state) => state.items);

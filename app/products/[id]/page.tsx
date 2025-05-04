@@ -1,20 +1,25 @@
 import ProductDetail from "@/components/ProductDetail";
 import { stripe } from "@/lib/stripe";
+import { Metadata } from "next";
 
-interface Props {
+type PageProps = {
   params: {
     id: string;
   };
-}
+};
 
-const ProductPage = async ({ params }: Props) => {
+export default async function ProductPage({ params }: PageProps) {
   const product = await stripe.products.retrieve(params.id, {
     expand: ["default_price"],
   });
 
   const plainProduct = JSON.parse(JSON.stringify(product));
-
   return <ProductDetail product={plainProduct} />;
-};
+}
 
-export default ProductPage;
+// (необязательно) SEO
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  return {
+    title: `Товар: ${params.id} | Nordique`,
+  };
+}
