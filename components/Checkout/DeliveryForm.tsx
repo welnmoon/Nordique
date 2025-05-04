@@ -1,17 +1,15 @@
 "use client";
 
-import { Button, Form, Input, Select } from "antd";
-import { useState } from "react";
+import { DeliveryFormValues } from "@/types";
+import { Form, Input, Select } from "antd";
 
 const { Option } = Select;
 
 interface Props {
-  onFinish: (values: any) => void;
+  onFinish: (values: DeliveryFormValues) => void;
 }
 
 const DeliveryForm = ({ onFinish }: Props) => {
-  const [selectedCity, setSelectedCity] = useState<string | null>(null);
-
   const cities = [
     "Алматы",
     "Астана",
@@ -62,7 +60,6 @@ const DeliveryForm = ({ onFinish }: Props) => {
           showSearch
           placeholder="Выберите город"
           optionFilterProp="children"
-          onChange={(value) => setSelectedCity(value)}
           filterOption={(input, option) =>
             (option?.children as unknown as string)
               .toLowerCase()

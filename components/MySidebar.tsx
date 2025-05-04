@@ -17,7 +17,7 @@ const MySidebar = () => {
 
   useEffect(() => {
     setOpen(false);
-  }, [pathname]);
+  }, [pathname, setOpen]);
 
   const itemsPrice = formatPrice(
     items.reduce((sum, i) => sum + i.price * i.quantity, 0)

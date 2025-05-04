@@ -5,6 +5,7 @@ import { formatPrice } from "@/utils/formatPrice";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 
 const Orders = () => {
   const { data: session } = useSession();
@@ -31,7 +32,9 @@ const Orders = () => {
   }, [session]);
 
   if (loading) {
-    return <p className="text-center text-gray-500">Загрузка ваших заказов...</p>;
+    return (
+      <p className="text-center text-gray-500">Загрузка ваших заказов...</p>
+    );
   }
 
   return (
@@ -67,7 +70,7 @@ const Orders = () => {
                     </p>
                   </div>
                   <div className="w-14 h-14 relative shrink-0">
-                    <img
+                    <Image
                       src={item.images?.[0]}
                       alt={item.name}
                       className="object-cover w-full h-full rounded"

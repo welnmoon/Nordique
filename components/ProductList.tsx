@@ -1,7 +1,7 @@
 "use client";
 import Stripe from "stripe";
 import ProductCard from "./ProductCard";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSidebar } from "./ui/sidebar";
 
 import {

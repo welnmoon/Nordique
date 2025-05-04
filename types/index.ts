@@ -7,3 +7,11 @@ export interface CartItem {
   quantity: number;
   product_count_max?: number;
 }
+
+export interface DeliveryFormValues {
+  name: string;
+  phone: string;
+  city: string;
+  address?: string;
+  zip?: string;
+}

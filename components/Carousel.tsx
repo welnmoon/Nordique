@@ -27,8 +27,6 @@ const Carousel = ({ products }: Props) => {
     },
   });
 
-  const animationRef = useRef<number>(0);
-
   useEffect(() => {
     const slider = sliderRef.current;
     if (!slider) return;

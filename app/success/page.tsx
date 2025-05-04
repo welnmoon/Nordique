@@ -3,14 +3,15 @@
 import { useCartStore } from "@/store/CartStore";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
-const SuccessPage = ({
-  searchParams,
-}: {
-  searchParams: { session_id?: string };
-}) => {
+// Props: {
+//   searchParams,
+// }: {
+//   searchParams: { session_id?: string };
+// }
+
+const SuccessPage = () => {
   const { data: session } = useSession();
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
@@ -32,7 +33,7 @@ const SuccessPage = ({
       saveOrder();
       clearCart();
     }
-  }, [session]);
+  }, [session, items, clearCart]);
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh] px-4 text-center">

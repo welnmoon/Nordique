@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { stripe } from "@/lib/stripe";
 import Link from "next/link";
 import Image from "next/image";
-import { montserrat, playfair } from "@/utils/fonts";
+import { montserrat } from "@/utils/fonts";
 import Logotype from "@/components/Logotype";
 
 export default async function Home() {

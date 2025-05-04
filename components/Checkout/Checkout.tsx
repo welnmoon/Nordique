@@ -12,6 +12,7 @@ import { useState } from "react";
 import { deliveryOptions } from "@/data/deliveryOptions";
 import { formatPrice } from "@/utils/formatPrice";
 import { checkoutAction } from "@/app/checkout/checkout-action";
+import { DeliveryFormValues } from "@/types";
 
 const Checkout = () => {
   const { data: session, status } = useSession();
@@ -26,12 +27,12 @@ const Checkout = () => {
     (d) => d.id === selectedDeliveryID
   );
 
-  const total = formatPrice(totalPrices + selectedDelivery?.price!);
+  const total = formatPrice(totalPrices + (selectedDelivery?.price ?? 0));
 
   if (status === "loading")
     return <p className="text-center text-gray-500 ">Загрузка...</p>;
 
-  const handleCheckout = async (values: any) => {
+  const handleCheckout = async (values: DeliveryFormValues) => {
     const formData = new FormData();
     formData.append("items", JSON.stringify(items));
     formData.append("delivery", JSON.stringify(values));
@@ -92,7 +93,7 @@ const Checkout = () => {
                   <div className="flex justify-between items-center">
                     <p>Цена доставки ({selectedDelivery?.title}):</p>
                     <span className="text-gray-500 font-bold">
-                      {formatPrice(selectedDelivery?.price!)}
+                      {formatPrice(selectedDelivery?.price ?? 0)}
                     </span>
                   </div>
                   <div className="flex justify-between items-center font-bold text-lg">

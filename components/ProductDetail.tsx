@@ -24,7 +24,6 @@ const ProductDetail = ({
 }) => {
   const price = product.default_price as Stripe.Price;
   const [count, setCount] = useState<number>(0);
-  const [added, setAdded] = useState<boolean>(false);
   const { setOpen } = useSidebar();
 
   const countHandler = (operation: string) => {
@@ -63,12 +62,7 @@ const ProductDetail = ({
     alreadyExists = items.some((i) => i.id === product.id);
     if (!alreadyExists) addItem(productObj);
 
-    setAdded(true);
     setCount(0);
-
-    setTimeout(() => {
-      setAdded(false);
-    }, 3000);
   };
 
   return (

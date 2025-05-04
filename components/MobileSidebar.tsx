@@ -20,7 +20,7 @@ const MobileDrawer = ({ open, onClose }: Props) => {
   const pathname = usePathname();
   useEffect(() => {
     onClose();
-  }, [pathname]);
+  }, [pathname, onClose]);
 
   const [childrenDrawer, setChildrenDrawer] = useState(false);
   const removeItem = useCartStore((state) => state.removeItem);
@@ -28,7 +28,6 @@ const MobileDrawer = ({ open, onClose }: Props) => {
   const itemsPrice = items
     .reduce((sum, i) => sum + i.price * i.quantity, 0)
     .toFixed(2);
-  const navigationTitles = ["Home", "Products", "Checkout"];
 
   return (
     <Drawer
