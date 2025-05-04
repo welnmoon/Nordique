@@ -1,0 +1,19 @@
+### Создание заказа
+POST http://localhost:5185/api/orders
+Content-Type: application/json
+
+{
+  "userEmail": "test@example.com",
+  "items": [
+    {
+      "id": "product-123",
+      "name": "Футболка",
+      "price": 5990,
+      "quantity": 2,
+      "images": ["https://example.com/image1.jpg"]
+    }
+  ]
+}
+
+### Получение заказов по email
+GET http://localhost:5185/api/orders?email=test@example.com
