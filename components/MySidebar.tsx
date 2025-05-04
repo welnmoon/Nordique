@@ -6,14 +6,13 @@ import { Button, Flex } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
 import { MdDelete } from "react-icons/md";
 
 const MySidebar = () => {
   const { open, setOpen } = useSidebar();
   const items = useCartStore((state) => state.items);
   const removeItem = useCartStore((state) => state.removeItem);
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // useEffect(() => {

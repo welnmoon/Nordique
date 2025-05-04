@@ -6,7 +6,7 @@ import { Button, Drawer, Flex } from "antd";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdDelete } from "react-icons/md";
 import { RiShoppingCartFill } from "react-icons/ri";
 import { VscAccount } from "react-icons/vsc";
@@ -17,7 +17,7 @@ interface Props {
 }
 
 const MobileDrawer = ({ open, onClose }: Props) => {
-  const pathname = usePathname();
+  // const pathname = usePathname();
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   // useEffect(() => {
