@@ -14,7 +14,6 @@ import { formatPrice } from "@/utils/formatPrice";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { FavoriteItem } from "@/types";
 import { checkFavorite, postFavorite, removeFavorite } from "@/utils/favorites";
 
 interface Props {
@@ -32,7 +31,7 @@ const ProductCard = ({ product }: Props) => {
   useEffect(() => {
     if (!session) return;
     checkFavorite({ setIsFavorite, status, session, product });
-  }, [session, product.id]);
+  }, [session, product.id, product, status]);
 
   const handleToggleFavorite = async () => {
     if (!session?.user?.email) return alert("Сначала войдите в аккаунт");
