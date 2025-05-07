@@ -38,6 +38,7 @@ const Checkout = () => {
     formData.append("delivery", JSON.stringify(values));
 
     const url = await checkoutAction(formData);
+    localStorage.setItem("delivery", JSON.stringify(values));
     window.location.href = url;
   };
 

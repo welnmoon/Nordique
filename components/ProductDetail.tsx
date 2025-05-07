@@ -36,7 +36,7 @@ const ProductDetail = ({
   const productCountMax = () => {
     const productPrice = (price?.unit_amount ?? 0) / 100;
     if (productPrice < 25000) return MAX_COUNT_REGULAR;
-    if (productPrice >= 2500 && productPrice < 60000) return MAX_COUNT_MEDIUM;
+    if (productPrice >= 25000 && productPrice < 60000) return MAX_COUNT_MEDIUM;
     if (productPrice >= 60000) return MAX_COUNT_EXCLUSIVE;
 
     return MAX_COUNT_EXCLUSIVE;

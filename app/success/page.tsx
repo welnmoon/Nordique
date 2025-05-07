@@ -1,6 +1,7 @@
 "use client";
 
 import { useCartStore } from "@/store/CartStore";
+import { DeliveryFormValues } from "@/types";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useEffect } from "react";
@@ -13,15 +14,27 @@ const SuccessPage = () => {
   useEffect(() => {
     if (session && items.length > 0) {
       const saveOrder = async () => {
+        const deliveryRaw = localStorage.getItem("delivery");
+        const delivery: DeliveryFormValues | null = deliveryRaw
+          ? JSON.parse(deliveryRaw)
+          : null;
+
         await fetch("http://localhost:5185/api/orders", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             userEmail: session.user?.email,
             items,
+            recipientName: delivery?.name,
+            phone: delivery?.phone,
+            city: delivery?.city,
+            address: delivery?.address,
+            zip: delivery?.zip,
             createdAt: new Date().toISOString(),
           }),
         });
+
+        localStorage.removeItem("delivery");
       };
 
       saveOrder();

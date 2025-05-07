@@ -1,7 +1,10 @@
 "use client";
 
-import { DeliveryFormValues } from "@/types";
+import { DeliveryFormValues, Order } from "@/types";
+import { cities } from "@/utils/constant";
 import { Form, Input, Select } from "antd";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 const { Option } = Select;
 
@@ -10,31 +13,40 @@ interface Props {
 }
 
 const DeliveryForm = ({ onFinish }: Props) => {
-  const cities = [
-    "Алматы",
-    "Астана",
-    "Шымкент",
-    "Актобе",
-    "Караганда",
-    "Тараз",
-    "Павлодар",
-    "Усть-Каменогорск",
-    "Семей",
-    "Костанай",
-    "Кызылорда",
-    "Уральск",
-    "Атырау",
-    "Петропавловск",
-    "Темиртау",
-    "Туркестан",
-    "Экибастуз",
-    "Рудный",
-    "Жезказган",
-    "Балхаш",
-  ];
+  const { data: session } = useSession();
+
+  //antd hook
+  const [form] = Form.useForm();
+  useEffect(() => {
+    if (!session?.user?.email) return;
+
+    const getAddress = async () => {
+      try {
+        const res = await fetch(
+          `http://localhost:5185/api/orders?email=${session?.user?.email}`
+        );
+        const orders: Order[] = await res.json();
+        if (orders.length > 0) {
+          const lastOrder = orders[orders.length - 1];
+          const mapped = {
+            name: lastOrder.recipientName,
+            phone: lastOrder.phone,
+            city: lastOrder.city,
+            address: lastOrder.address,
+            zip: lastOrder.zip,
+          };
+
+          form.setFieldsValue(mapped);
+        }
+      } catch (error) {
+        console.error("Ошибка при получении адреса", error);
+      }
+    };
+    getAddress();
+  }, [session, form]);
 
   return (
-    <Form layout="vertical" onFinish={onFinish}>
+    <Form layout="vertical" onFinish={onFinish} form={form}>
       <Form.Item
         label="Имя получателя"
         name="name"

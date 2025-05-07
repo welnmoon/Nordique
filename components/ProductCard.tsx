@@ -11,6 +11,12 @@ import {
 import { Button } from "./ui/button";
 import { formatPrice } from "@/utils/formatPrice";
 
+import { IoHeart, IoHeartOutline } from "react-icons/io5";
+import { useEffect, useState } from "react";
+import { useSession } from "next-auth/react";
+import { FavoriteItem } from "@/types";
+import { checkFavorite, postFavorite, removeFavorite } from "@/utils/favorites";
+
 interface Props {
   product: Stripe.Product;
 }
@@ -18,6 +24,27 @@ interface Props {
 const ProductCard = ({ product }: Props) => {
   const price = product.default_price as Stripe.Price;
   const formattedPrice = formatPrice(price.unit_amount! / 100);
+  const { data: session, status } = useSession();
+
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
+
+  // находим продукт
+  useEffect(() => {
+    if (!session) return;
+    checkFavorite({ setIsFavorite, status, session, product });
+  }, [session, product.id]);
+
+  const handleToggleFavorite = async () => {
+    if (!session?.user?.email) return alert("Сначала войдите в аккаунт");
+
+    if (isFavorite) {
+      removeFavorite({ productId: product.id, session });
+      setIsFavorite(false);
+    } else {
+      postFavorite({ product, price, session, status });
+      setIsFavorite(true);
+    }
+  };
 
   return (
     <div className="block group:">
@@ -55,9 +82,17 @@ const ProductCard = ({ product }: Props) => {
                 </p>
               )}
             </CardDescription>
-            <Link href={`/products/${product.id}`}>
-              <Button className="w-full cursor-pointer">Подробнее</Button>
-            </Link>
+            <div className="flex items-center gap-2">
+              <div
+                onClick={handleToggleFavorite}
+                className="shrink-0 text-xl text-gray-500 hover:text-gray-400 cursor-pointer"
+              >
+                {isFavorite ? <IoHeart /> : <IoHeartOutline />}
+              </div>
+              <Link href={`/products/${product.id}`} className="flex-1">
+                <Button className="w-full cursor-pointer">Подробнее</Button>
+              </Link>
+            </div>
           </CardContent>
         </div>
       </Card>

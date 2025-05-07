@@ -1,11 +1,11 @@
 "use client";
 
-import { Order } from "@/utils/constant";
 import { formatPrice } from "@/utils/formatPrice";
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { Order } from "@/types";
 
 const Orders = () => {
   const { data: session } = useSession();
@@ -73,6 +73,7 @@ const Orders = () => {
                     <Image
                       src={item.images?.[0]}
                       alt={item.name}
+                      fill
                       className="object-cover w-full h-full rounded"
                     />
                   </div>
@@ -83,6 +84,24 @@ const Orders = () => {
                   order.items.reduce((sum, i) => sum + i.price * i.quantity, 0)
                 )}
               </p>
+              <div className="mt-4 bg-gray-50 p-4 rounded">
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Получатель:</span>{" "}
+                  {order.recipientName}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Телефон:</span> {order.phone}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Город:</span> {order.city}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Адрес:</span> {order.address}
+                </p>
+                <p className="text-sm text-gray-600">
+                  <span className="font-semibold">Индекс:</span> {order.zip}
+                </p>
+              </div>
             </div>
           </div>
         ))

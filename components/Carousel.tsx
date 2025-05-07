@@ -39,28 +39,30 @@ const Carousel = ({ products }: Props) => {
   }, []);
 
   return (
-    <div ref={containerRef} className="keen-slider py-4">
-      {products.concat(products).map((product, idx) => (
-        <div
-          key={`${product.id}-${idx}`}
-          className="keen-slider__slide min-w-[260px] bg-white rounded-lg shadow-md overflow-hidden"
-        >
-          <div className="relative w-full h-48">
-            <Image
-              src={product.images?.[0] || "/placeholder.jpg"}
-              alt={product.name}
-              fill
-              className="object-cover"
-            />
+    <section className="mb-16 px-4">
+      <div ref={containerRef} className="keen-slider py-4">
+        {products.concat(products).map((product, idx) => (
+          <div
+            key={`${product.id}-${idx}`}
+            className="keen-slider__slide min-w-[260px] bg-white rounded-lg shadow-md overflow-hidden"
+          >
+            <div className="relative w-full h-48">
+              <Image
+                src={product.images?.[0] || "/placeholder.jpg"}
+                alt={product.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <div className="p-4 text-center">
+              <h3 className="font-semibold text-lg text-gray-800">
+                <Link href={`/products/${product.id}`}>{product.name}</Link>
+              </h3>
+            </div>
           </div>
-          <div className="p-4 text-center">
-            <h3 className="font-semibold text-lg text-gray-800">
-              <Link href={`/products/${product.id}`}>{product.name}</Link>
-            </h3>
-          </div>
-        </div>
-      ))}
-    </div>
+        ))}
+      </div>
+    </section>
   );
 };
 

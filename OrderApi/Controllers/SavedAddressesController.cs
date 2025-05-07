@@ -5,18 +5,18 @@ namespace OrderApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class DeliveryAddressController : ControllerBase
+    public class SavedAddressController : ControllerBase
     {
-        private static readonly List<DeliveryAddress> Addresses = new();
+        private static readonly List<SavedAddress> Addresses = new();
 
         [HttpPost]
-        public IActionResult SaveAddress([FromBody] DeliveryAddress address)
+        public IActionResult SaveAddress([FromBody] SavedAddress address)
         {
             var existing = Addresses.FirstOrDefault(a => a.UserEmail == address.UserEmail);
             if (existing != null) Addresses.Remove(existing);
 
             Addresses.Add(address);
-            return Ok(new { message = "Адрес сохранён" });
+            return Ok(new { message = "Сохранённый адрес обновлён" });
         }
 
         [HttpGet]

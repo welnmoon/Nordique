@@ -9,7 +9,7 @@ export const NAVIGATION_TITLES = [
   },
   {
     name: "Магазин",
-    link: "/products",
+    link: "products",
   },
   {
     name: "Оформления заказа",
@@ -23,17 +23,25 @@ export const ProductsTypes = [
   { value: "watches", label: "Часы" },
 ];
 
-export interface OrderItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  images: string[];
-}
-
-export interface Order {
-  id: string;
-  userEmail: string;
-  items: OrderItem[];
-  createdAt: string;
-}
+export const cities = [
+    "Алматы",
+    "Астана",
+    "Шымкент",
+    "Актобе",
+    "Караганда",
+    "Тараз",
+    "Павлодар",
+    "Усть-Каменогорск",
+    "Семей",
+    "Костанай",
+    "Кызылорда",
+    "Уральск",
+    "Атырау",
+    "Петропавловск",
+    "Темиртау",
+    "Туркестан",
+    "Экибастуз",
+    "Рудный",
+    "Жезказган",
+    "Балхаш",
+  ];

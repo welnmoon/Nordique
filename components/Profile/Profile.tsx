@@ -2,6 +2,7 @@
 import { useState } from "react";
 import UserInfo from "./UserInfo";
 import Orders from "./Orders";
+import Favorites from "./Favorites";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<string>("userInfo");
@@ -9,7 +10,7 @@ const Profile = () => {
   return (
     <div className="w-500 flex max-w-5xl mx-auto mt-10 gap-10">
       <div className="w-64 border-r pr-4">
-        <ul>
+        <ul className="flex flex-col gap-4 text-md md:text-lg">
           <li
             onClick={() => setActiveTab("userInfo")}
             className="cursor-pointer"
@@ -39,7 +40,7 @@ const Profile = () => {
       <div>
         {activeTab === "userInfo" && <UserInfo />}
         {activeTab === "orders" && <Orders />}
-        {activeTab}
+        {activeTab === "favorites" && <Favorites/>}
       </div>
     </div>
   );
