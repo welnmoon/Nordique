@@ -1,6 +1,6 @@
 "use client";
 
-import { DeliveryFormValues, Order } from "@/types";
+import { DeliveryFormValues, Order, SavedAddress } from "@/types";
 import { cities } from "@/utils/constant";
 import { Form, Input, Select } from "antd";
 import { useSession } from "next-auth/react";
@@ -22,10 +22,29 @@ const DeliveryForm = ({ onFinish }: Props) => {
 
     const getAddress = async () => {
       try {
-        const res = await fetch(
+        const resFromSavedAddress = await fetch(
+          `http://localhost:5185/api/savedaddress?email=${session?.user?.email}`
+        );
+        if (resFromSavedAddress.ok) {
+          const savedAddress: SavedAddress = await resFromSavedAddress.json();
+
+          const mapped = {
+            name: savedAddress.recipientName,
+            phone: savedAddress.phone,
+            city: savedAddress.city,
+            address: savedAddress.address,
+            zip: savedAddress.zip,
+          };
+
+          form.setFieldsValue(mapped);
+          return;
+        }
+
+        const ordersRes = await fetch(
           `http://localhost:5185/api/orders?email=${session?.user?.email}`
         );
-        const orders: Order[] = await res.json();
+        if (!ordersRes.ok) return;
+        const orders: Order[] = await ordersRes.json();
         if (orders.length > 0) {
           const lastOrder = orders[orders.length - 1];
           const mapped = {

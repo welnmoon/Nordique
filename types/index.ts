@@ -46,3 +46,22 @@ export interface FavoriteItem {
   userEmail: string;
   createdAt: string;
 }
+
+export interface Review {
+  id: number;
+  userEmail: string;
+  productId: string;
+  comment: string;
+  rating: number;
+  createdAt: string;
+}
+
+export interface SavedAddress {
+  id: number;
+  userEmail: string;
+  recipientName: string;
+  phone: string;
+  city: string;
+  address: string;
+  zip: string;
+}

@@ -4,28 +4,35 @@ using OrderApi.Models;
 namespace OrderApi.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
-    public class SavedAddressController : ControllerBase
+[Route("api/[controller]")]
+public class SavedAddressController : ControllerBase
+{
+    private static readonly List<SavedAddress> SavedAddresses = new();
+
+    [HttpGet]
+    public IActionResult GetAddress([FromQuery] string email)
     {
-        private static readonly List<SavedAddress> Addresses = new();
+        var address = SavedAddresses.FirstOrDefault(a => a.UserEmail == email);
+        if (address == null)
+            return NotFound(new { message = "Сохранённый адрес не найден" });
 
-        [HttpPost]
-        public IActionResult SaveAddress([FromBody] SavedAddress address)
-        {
-            var existing = Addresses.FirstOrDefault(a => a.UserEmail == address.UserEmail);
-            if (existing != null) Addresses.Remove(existing);
-
-            Addresses.Add(address);
-            return Ok(new { message = "Сохранённый адрес обновлён" });
-        }
-
-        [HttpGet]
-        public IActionResult GetAddress([FromQuery] string email)
-        {
-            var address = Addresses.FirstOrDefault(a => a.UserEmail == email);
-            if (address == null) return NotFound(new { message = "Адрес не найден" });
-
-            return Ok(address);
-        }
+        return Ok(address);
     }
+
+    [HttpPost]
+    public IActionResult SaveOrUpdateAddress([FromBody] SavedAddress newAddress)
+    {
+        var existing = SavedAddresses.FirstOrDefault(a => a.UserEmail == newAddress.UserEmail);
+        if (existing != null)
+        {
+            SavedAddresses.Remove(existing);
+        }
+
+        newAddress.UpdatedAt = DateTime.UtcNow;
+        SavedAddresses.Add(newAddress);
+
+        return Ok(new { message = "Адрес сохранён" });
+    }
+}
+
 }

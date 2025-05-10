@@ -14,7 +14,6 @@ import { formatPrice } from "@/utils/formatPrice";
 import { IoHeart, IoHeartOutline } from "react-icons/io5";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
-import { FavoriteItem } from "@/types";
 import { checkFavorite, postFavorite, removeFavorite } from "@/utils/favorites";
 
 interface Props {

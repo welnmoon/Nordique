@@ -9,8 +9,8 @@ const UserInfo = () => {
   return (
     <div>
       {session.data ? (
-        <div>
-          <div className="mb-10 flex flex-col gap-4">
+        <div className="flex flex-col gap-10">
+          <div className="flex flex-col gap-4">
             <div>
               <h1 className="text-3xl font-medium">
                 {session.data?.user?.name}
@@ -21,10 +21,9 @@ const UserInfo = () => {
               Выйти
             </Button>
           </div>
-          <div>
+          <div className="flex flex-col gap-6">
             <h2 className="text-2xl">Адрес доставки</h2>
-            {/* <span>Имя получателя: </span>
-            <span>-</span> */}
+
             <DeliveryAddressForm />
           </div>
         </div>

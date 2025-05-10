@@ -3,44 +3,45 @@ import { useState } from "react";
 import UserInfo from "./UserInfo";
 import Orders from "./Orders";
 import Favorites from "./Favorites";
+import Settings from "./Settings";
+import Support from "./Support";
 
 const Profile = () => {
   const [activeTab, setActiveTab] = useState<string>("userInfo");
 
+  const navItems = [
+    { key: "userInfo", label: "Аккаунт" },
+    { key: "orders", label: "Заказы" },
+    { key: "favorites", label: "Избранное" },
+    { key: "settings", label: "Настройки" },
+    { key: "support", label: "Поддержка" },
+  ];
+
   return (
-    <div className="w-500 flex max-w-5xl mx-auto mt-10 gap-10">
+    <div className="flex max-w-5xl mx-auto mt-10 gap-10 w-full">
       <div className="w-64 border-r pr-4">
-        <ul className="flex flex-col gap-4 text-md md:text-lg">
-          <li
-            onClick={() => setActiveTab("userInfo")}
-            className="cursor-pointer"
-          >
-            Аккаунт
-          </li>
-          <li onClick={() => setActiveTab("orders")} className="cursor-pointer">
-            Заказы
-          </li>
-          <li
-            onClick={() => setActiveTab("favorites")}
-            className="cursor-pointer"
-          >
-            Избранное
-          </li>
-          <li
-            onClick={() => setActiveTab("settings")}
-            className="cursor-pointer"
-          >
-            Настройки
-          </li>
-          <li onClick={() => setActiveTab("help")} className="cursor-pointer">
-            Поддержка
-          </li>
+        <ul className="flex flex-col gap-2 text-md md:text-lg">
+          {navItems.map((item) => (
+            <li
+              key={item.key}
+              onClick={() => setActiveTab(item.key)}
+              className={`cursor-pointer px-4 py-2 rounded transition-all ${
+                activeTab === item.key
+                  ? "bg-gray-100 font-semibold border-l-4 border-black text-black"
+                  : "text-gray-600 hover:bg-gray-50"
+              }`}
+            >
+              {item.label}
+            </li>
+          ))}
         </ul>
       </div>
-      <div>
+      <div className="flex-1">
         {activeTab === "userInfo" && <UserInfo />}
         {activeTab === "orders" && <Orders />}
-        {activeTab === "favorites" && <Favorites/>}
+        {activeTab === "favorites" && <Favorites />}
+        {activeTab === "settings" && <Settings />}
+        {activeTab === "support" && <Support />}
       </div>
     </div>
   );

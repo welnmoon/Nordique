@@ -1,7 +1,7 @@
 "use client";
 import Stripe from "stripe";
 import ProductCard from "./ProductCard";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSidebar } from "./ui/sidebar";
 
 import {
@@ -14,6 +14,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ProductsTypes } from "@/utils/constant";
+import { useSearchParams } from "next/navigation";
 
 interface Props {
   products: Stripe.Product[];
@@ -22,8 +23,18 @@ interface Props {
 const ProductList = ({ products }: Props) => {
   const [search, setSearch] = useState<string>("");
   const [sort, setSort] = useState<string>("");
+  const searchParams = useSearchParams();
+  const searchCategory = searchParams.get("category");
 
   const { open } = useSidebar();
+
+  useEffect(() => {
+    if (!searchCategory) return;
+    const category = ProductsTypes.find(
+      (c) => c.value === searchCategory.toLowerCase()
+    );
+    if (category) setSort(category.value);
+  }, [searchCategory]);
 
   const filteredProducts = useMemo(() => {
     return products.filter((p) => {
